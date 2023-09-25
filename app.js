@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 
+const errorHandlingMiddleware = require("./middleware/error-handler");
 const notFound = require("./middleware/not-found");
 const tasks = require("./routes/tasks");
 const connectDB = require("./db/connect");
@@ -10,10 +11,7 @@ const connectionString = process.env.CONNECTION;
 //middleware
 app.use(express.static("./public"));
 app.use(express.json());
-
-// app.get("/", (req, res) => {
-//   res.send("Task Manager");
-// });
+app.use(errorHandlingMiddleware);
 
 app.use("/api/v1/tasks", tasks);
 
